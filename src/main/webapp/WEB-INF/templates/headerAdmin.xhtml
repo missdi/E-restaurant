@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:p="http://primefaces.org/ui">
+
+<ui:composition> 
+ <h:head>
+	<h:outputStylesheet library="css" name="style.css" /> 
+</h:head>
+<h:body> 
+		<div class="header-bg" > 
+		<h:graphicImage value="resources/images/logo.png" />  
+		</div>   
+	<h:form>
+	<p:menubar styleClass="menuBar">
+		<p:submenu label="Menu">			
+			<p:menuitem value="Edit menu" url="menuList.xhtml"/>
+			<p:menuitem value="Edit menu category" url="foodCatList.xhtml" />
+			<p:menuitem value="Add dish"  url="addDish.xhtml" />			
+		</p:submenu>	
+		
+		<p:submenu label="Order list">			
+			<p:menuitem value="Order list for kitchen" url="oListKitchen.xhtml"/>
+			<p:menuitem value="Order list for delivery" url="deliveryList.xhtml" />					
+		</p:submenu>	
+		<p:submenu label="Analytics">			
+			<p:menuitem value="Get report" url="analyticsTotal.xhtml"/>						
+		</p:submenu>	
+		<!-- <p:submenu label="Security">			
+			<p:menuitem value="Create account" url=""/>
+			<p:menuitem value="Edit account" url="" />					
+		</p:submenu>	 -->
+	</p:menubar> 
+	
+	
+	</h:form>
+	
+</h:body>
+</ui:composition>
+</html>

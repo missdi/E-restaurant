@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="style.css" /> 
+</h:head>
+
+<h:body>
+
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">		
+	<ui:define name="content">
+	
+	<h:form >
+	<p:growl id="growl" sticky="true" showDetail="true"/>
+ 
+    <p:wizard flowListener="#{userBean.onFlowProcess}"  styleClass="registr">
+        <p:tab id="personal" title="Personal">            
+        
+            <p:panel header="Personal Details">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value" styleClass="registr">
+                	<h:outputText value="Login: *" />
+                    <p:inputText value="#{userBean.user.login}" required="true" label="Login"/>
+               		
+               		<h:outputText value="Password: *" />
+                    <p:password value="#{userBean.user.password}" required="true" label="Password"/>
+                
+                    <h:outputText value="Firstname: *" />
+                    <p:inputText value="#{userBean.user.userName}" required="true" label="Firstname"/>
+ 
+                    <h:outputText value="Lastname: *" />
+                    <p:inputText value="#{userBean.user.userSurname}" required="true" label="Lastname"/>
+ 
+                    <h:outputText value="Date of birth: " />
+                    <p:inputMask id="mask" value="#{userBean.user.userDB}" mask="99/99/9999" converter="#{dateBean}" /> 
+                                        
+                      #{userBean.user.setaccessRoleIdUser()}          
+                </h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+     <p:tab id="address" title="Address">
+            <p:panel header="Address Details">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">                  
+ 
+                    <h:outputText value="Address: " />
+                    <p:inputText value="#{userBean.user.address}" />   
+                             
+            	</h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="contact" title="Contact">
+            <p:panel header="Contact Information">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Email: *" />
+                    <p:inputText value="#{userBean.user.userEmail}" required="true" label="Email"/>
+ 
+                    <h:outputText value="Phone: " />
+                   <p:inputMask value="#{userBean.user.userPhone}" mask="(999) 999-9999"/>
+                    
+                </h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="confirm" title="Confirmation">
+            <p:panel header="Confirmation">
+                <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                    <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:outputText value="Firstname: " />
+                        <h:outputText value="#{userBean.user.userName}" styleClass="outputLabel"/>
+ 
+                        <h:outputText value="Lastname: " />
+                        <h:outputText value="#{userBean.user.userSurname}" styleClass="outputLabel"/>
+ 
+                        <h:outputText value="Date of dirth: " />
+                        <h:outputText value="#{userBean.user.userDB}" styleClass="outputLabel"/>
+                    </h:panelGrid>
+                     <h:panelGrid columns="2" columnClasses="label, value">                      
+ 
+                        <h:outputText value="Address: " />
+                        <h:outputText value="#{userBean.user.address}" styleClass="outputLabel"/> 
+                   
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:outputText value="Email: " />
+                        <h:outputText value="#{userBean.user.userEmail}" styleClass="outputLabel"/>
+ 
+                        <h:outputText value="Phone " />
+                        <h:outputText value="#{userBean.user.userPhone}" styleClass="outputLabel"/> 
+                        
+                    </h:panelGrid>
+                </h:panelGrid>
+ 
+                <p:commandButton value="Submit" actionListener="#{userBean.save}" update="growl" action="loginNew"  />
+            </p:panel>
+        </p:tab>
+    </p:wizard>
+	</h:form>
+
+</ui:define>
+</ui:composition>
+
+</h:body>
+
+</html>

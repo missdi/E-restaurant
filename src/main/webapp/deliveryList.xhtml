@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<title>Delivery list</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h:outputStylesheet library="css" name="style.css" /> 
+</h:head>
+<h:body>
+<ui:composition template="WEB-INF/templates/adminTemplate.xhtml">	
+<ui:define name="content"> 
+<!-- <h:form id="form">		
+	<p:growl id="msgs" showDetail="true"/> 
+  
+	<p:dataTable var="dList" value="#{deliveryListBean.deliveryList}" styleClass="dTable" sortMode="multiple">
+	
+		<f:facet name="header">
+		List of dishes
+		</f:facet>	
+	
+		<p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}" update=":form:msgs" />
+		<p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}" update=":form:msgs" />		
+       	
+       	<p:column headerText="Order Number" sortBy="#{dList.orderId}">        
+              <h:outputText value="#{dList.orderId}" />               
+       </p:column>	 
+       
+       	<p:column headerText="Readiness Time" sortBy="#{dList.readinessTime}">        
+              <h:outputText value="#{dList.readinessTime}" />               
+       </p:column>	 
+       
+       <p:column headerText="Dish name">        
+              <h:outputText value="#{dList.dishName}" />               
+       </p:column>	 
+              
+	 	<p:column headerText="Dish price">        
+              <h:outputText value="#{dList.dishPrice}" />                             
+       </p:column>	 
+       
+       <p:column headerText="Order Status">       
+              <h:outputText value="#{dList.orderStatus}" />                
+       </p:column>	            
+	</p:dataTable>
+   </h:form> -->
+   
+   <h:form>  
+    <p:dataTable var="dList" value="#{deliveryListBean.deliveryList}" styleClass="dTable" editable="true" editMode="cell" >
+        <f:facet name="header">
+            Delivery List
+        </f:facet>
+        
+        <p:column style="width:16px">
+            <p:rowToggler />
+        </p:column>
+        
+        <p:column headerText="Order Number" sortBy="#{dList.orderId}">        
+              <h:outputText value="#{dList.orderId}" />               
+       </p:column>	 
+       
+       	<p:column headerText="Readiness Time" sortBy="#{dList.readinessTime}">        
+              <h:outputText value="#{dList.readinessTime}" />               
+       </p:column>	
+               
+        <p:column headerText="Order Status" sortBy="#{dList.orderStatusName}"> 
+       		<p:cellEditor> 		
+               <f:facet name="output"><h:outputText value="#{dList.orderStatusName}" /></f:facet>
+               <f:facet name="input">
+                  <h:selectOneMenu value="#{dList.orderStatusId}" style="width:100%" >
+                    <f:selectItems value="#{orderStatusBean.osList}" var="os" itemLabel="#{os.orderStatusName}" itemValue="#{os.id}" />   
+                     <f:ajax listener="#{deliveryListBean.changeOrderStatus(dList.orderId, dList.orderStatusId)}" />                                    
+                   </h:selectOneMenu> 
+               </f:facet>
+           </p:cellEditor>
+        </p:column>	        
+        
+        <p:rowExpansion>
+        #{orderBean.getOrderListById(dList.orderId)}
+             <p:dataTable var="oList" value="#{orderBean.forDelivery}" styleClass="dTable">           
+               
+                <p:column headerText="Dish name">        
+              	<h:outputText value="#{oList.menu.dishName}" />               
+       			</p:column>	 
+       
+       			<p:column headerText="Dish price" >        
+              	<h:outputText value="#{oList.menu.dishPrice}" />               
+       			</p:column>	               
+               
+             </p:dataTable>  
+           
+        </p:rowExpansion>
+    </p:dataTable>
+</h:form>
+   </ui:define>
+   </ui:composition>
+</h:body>
+</html>

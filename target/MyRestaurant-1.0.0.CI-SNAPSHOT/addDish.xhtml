@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+		xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Add new dish to menu</title>
+<h:outputStylesheet library="css" name="style.css" /> 
+</h:head>
+<h:body>
+<ui:composition template="WEB-INF/templates/adminTemplate.xhtml">	
+<ui:define name="content"> 
+   
+ 
+     <h:form>
+     <p:messages autoUpdate="true" />
+		<p:panelGrid columns="2" styleClass="addTable">	
+			<f:facet name="header">
+		Enter new dish parameters
+		</f:facet>	
+			<p:outputLabel value="Menu category"></p:outputLabel>
+			<h:selectOneMenu value="#{menuBean.menu.foodCategory}"  converter="#{fcConverter}" >					
+				<f:selectItem itemLabel="Select menu category" /> 				
+				<f:selectItems  value="#{foodCatBean.foodCat}" 
+								var="fcitem" 								
+								itemLabel="#{fcitem.foodCatName}"
+								itemValue="#{fcitem}"
+								/>		 
+			 </h:selectOneMenu>	   
+			<p:outputLabel value="Dish name"></p:outputLabel>				
+				<p:inputText value="#{menuBean.menu.dishName}"></p:inputText>
+			<p:outputLabel value="Dish price"></p:outputLabel>				
+				<p:inputText value="#{menuBean.menu.dishPrice}"></p:inputText>
+			<p:outputLabel value="Kitchen status"></p:outputLabel>
+				<p:selectBooleanCheckbox value="#{menuBean.menu.kitchenStatus}"> Kitchen-done </p:selectBooleanCheckbox>
+			<p:outputLabel value="Dish status"></p:outputLabel>
+			<p:selectBooleanCheckbox value="#{menuBean.menu.status}"> Active </p:selectBooleanCheckbox>		
+			 <p:outputLabel value=""></p:outputLabel>	
+		 <p:commandButton value="Submit" action ="#{menuBean.saveMenu}"/> 
+		
+		 	</p:panelGrid>	
+		</h:form>	
+			
+	 
+	 <!-- <h:form enctype="multipart/form-data">         
+        <p:messages showDetail="true" /> 
+        <p:fileUpload value="#{imageStoreBean.file}" mode="simple" /> 
+        <p:commandButton value="Submit" ajax="false" actionListener="#{menuBean.addCover}" /> 
+        <h:graphicImage id="image" alt="uploaded image" url="/image"/> 
+    </h:form> -->
+ </ui:define>
+   </ui:composition>
+			
+</h:body>
+</html>

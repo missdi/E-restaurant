@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<title>Menu list</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h:outputStylesheet library="css" name="style.css" /> 
+</h:head>
+<h:body>
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">	
+<ui:define name="content"> 
+
+<h:form>
+	
+	<p:panelGrid columns="2" editable="true" styleClass="dTable">
+	<f:facet name="header"> Delivery Details</f:facet>
+		<h:outputText value="Your name" style="font-weight: bold"/>
+		<p:inputText value="#{userBean.user.userName}" style="font-weight: bold">		
+		<p:ajax listener="#{userBean.ajaxListener}" />
+		</p:inputText>
+		<h:outputText value="Telephone" style="font-weight: bold"/>	 		
+		<p:inputText value="#{userBean.user.userPhone}">
+   			<p:ajax listener="#{userBean.ajaxListener}" />
+		</p:inputText>
+		
+		<h:outputText value="Delivery Address" style="font-weight: bold"/>	
+		<p:inputTextarea value="#{userBean.user.address}" rows="6" cols="33"> 
+			<p:ajax listener="#{userBean.ajaxListener}" />
+		</p:inputTextarea>
+		
+		<h:outputText value="Comment" style="font-weight: bold"/>	
+		<p:inputTextarea value="#{orderBean.order.comment}" rows="6" cols="33" />     
+	</p:panelGrid>
+	
+	#{orderBean.order.setCustomerAdd(userBean.user.address)}
+	#{orderBean.order.setCustomerPhone(userBean.user.userPhone)}
+	#{orderBean.order.setUserId(userBean.getUserId())}
+		
+</h:form>
+
+<h:form id="form">		
+	<p:growl id="msgs" showDetail="true" sticky="true" /> 
+  
+	<p:dataTable var="c" value="#{cartBean.cart}" styleClass="dTable" sortMode="multiple">
+	
+		<f:facet name="header">
+		Your order
+		</f:facet>	
+	
+		<p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}" update=":form:msgs" />
+		<p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}" update=":form:msgs" />		
+       	
+       	<p:column headerText="Dish name" >        
+              <h:outputText value="#{c.dishName}" />               
+       </p:column>	 
+       
+       	<p:column headerText="Dish price">        
+              <h:outputText value="#{c.dishPrice}" />               
+       </p:column>	     
+      	
+        <p:columnGroup type="footer">
+            <p:row>
+                <p:column  style="text-align:right" footerText="Total:" />
+                <p:column  footerText="$#{cartBean.priceTotal}" />                           
+            </p:row>
+        </p:columnGroup>
+        
+        <f:facet name="footer">
+           <p:commandButton value="Confirm order" action="#{cartBean.clearCart}" actionListener="#{orderBean.save(cartBean.cart)}"  />   
+        </f:facet>
+	</p:dataTable>	
+   </h:form>
+   </ui:define>
+   </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<title>Menu list</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h:outputStylesheet library="css" name="style.css" /> 
+</h:head>
+<h:body>
+<ui:composition template="WEB-INF/templates/adminTemplate.xhtml">	
+<ui:define name="content"> 
+<h:form id="form">		
+	<p:growl id="msgs" showDetail="true"/> 
+  
+	<p:dataTable var="m" value="#{menuBean.menuList}" editable="true" styleClass="dTable">
+	
+		<f:facet name="header">
+		List of dishes
+		</f:facet>	
+	<p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}" update=":form:msgs" />
+		<p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}" update=":form:msgs" />		
+		
+		<p:column headerText="Menu category">
+            <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{m.foodCategory.foodCatName}" /></f:facet>
+               <f:facet name="input">
+                  <h:selectOneMenu value="#{m.foodCategory}" style="width:100%" converter="#{fcConverter}">
+                       <f:selectItems value="#{foodCatBean.foodCat}" var="fc" itemLabel="#{fc.foodCatName}" itemValue="#{fc}" />
+                   </h:selectOneMenu> 
+               </f:facet>
+           </p:cellEditor>
+       </p:column>	 
+       	
+	 	<p:column headerText="Dish name">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{m.dishName}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{m.dishName}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+       </p:column>	 
+       
+       <p:column headerText="Dish price">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{m.dishPrice}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{m.dishPrice}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+       </p:column>	 
+       
+        <p:column headerText="Discription">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{m.description}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{m.description}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+       </p:column>	 
+       
+       <p:column headerText="Kitchen-done">
+           <p:cellEditor>
+               <f:facet name="output"><p:selectBooleanCheckbox value="#{m.kitchenStatus}" disabled="true"> </p:selectBooleanCheckbox></f:facet>
+               <f:facet name="input"><p:selectBooleanCheckbox value="#{m.kitchenStatus}"></p:selectBooleanCheckbox></f:facet>
+           </p:cellEditor>
+       </p:column>	
+       
+       <p:column headerText="Active">
+           <p:cellEditor>
+               <f:facet name="output"><p:selectBooleanCheckbox value="#{m.status}" disabled="true"> </p:selectBooleanCheckbox></f:facet>
+               <f:facet name="input"><p:selectBooleanCheckbox value="#{m.status}"></p:selectBooleanCheckbox></f:facet>
+           </p:cellEditor>
+       </p:column>	
+              
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+       
+	</p:dataTable>
+
+   </h:form>
+   </ui:define>
+   </ui:composition>
+</h:body>
+</html>
+

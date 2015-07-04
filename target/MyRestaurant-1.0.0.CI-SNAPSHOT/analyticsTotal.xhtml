@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<title>Menu list</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h:outputStylesheet library="css" name="style.css" /> 
+</h:head>
+
+<h:body>
+	<ui:composition template="WEB-INF/templates/adminTemplate.xhtml">	
+	<ui:define name="content"> 
+	
+	<h:form id="form" styleClass="formGraph">			
+		<p:outputLabel for="button" value="Choose date:" />
+		<p:calendar id="button" value="#{reportBean.daily}" showOn="button" navigator="true"/>		
+			
+		<p:selectOneMenu value="#{reportBean.foodCatId}"  >					
+				<f:selectItem itemLabel="Select menu category" /> 				
+				<f:selectItems  value="#{foodCatBean.foodCat}" 
+								var="fcitem" 								
+								itemLabel="#{fcitem.foodCatName}"
+								itemValue="#{fcitem.id}"
+								/>									
+		</p:selectOneMenu>	   
+		<p:commandButton value="Get report" actionListener="#{reportBean.clickDaily}"   icon="ui-icon-check" /> 
+		<p:panelGrid columns = "2" id="display">
+			 <h:outputText value="Orders qty:" />
+			 <h:outputText value="#{reportBean.report1.qty}" />
+			 <h:outputText value="Orders sum:" />
+			 <h:outputText value="#{reportBean.report1.sum}" />			
+		</p:panelGrid>
+	</h:form>
+
+	<h:form id="formPeriod" styleClass="formGraph">	
+		<p:outputLabel for="button1" value="Choose period:" />
+		<p:calendar id="button1" value="#{reportBean.d1}" showOn="button" navigator="true"/>
+		<p:calendar id="button2" value="#{reportBean.d2}" showOn="button" navigator="true"/>
+		<p:selectOneMenu value="#{reportBean.foodCatId2}"  >					
+				<f:selectItem itemLabel="Select menu category" /> 				
+				<f:selectItems  value="#{foodCatBean.foodCat}" 
+								var="fcitem" 								
+								itemLabel="#{fcitem.foodCatName}"
+								itemValue="#{fcitem.id}"
+								/>									
+		</p:selectOneMenu>				
+		<p:commandButton value="Get report" actionListener="#{reportBean.clickPeriod}"   icon="ui-icon-check" /> 
+		
+		<p:panelGrid columns = "2" id="displayPeriod">
+			 <h:outputText value="Orders qty:" />
+			 <h:outputText value="#{reportBean.qtyPeriod}" />
+			 <h:outputText value="Orders sum:" />
+			 <h:outputText value="#{reportBean.sumPeriod}" />
+			
+		</p:panelGrid>
+		
+		<p:chart id="bar1" type="bar" model="#{reportBean.barModelQty}" />
+		<p:chart id="bar2" type="bar" model="#{reportBean.barModelSum}" />
+	</h:form>
+	
+	
+</ui:define>
+</ui:composition>
+
+</h:body>
+
+</html>
